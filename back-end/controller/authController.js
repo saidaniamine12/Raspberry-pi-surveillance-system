@@ -112,8 +112,6 @@ exports.authenticateUser =  async (req, res, next) => {
 };
 
 exports.isLoggedIn =  async (req, res, next) => {
-    console.log(req.cookies.jwt);
-    console.log('im here');
     //check for the validation of the token
     if(req.cookies.jwt) {
         try{
@@ -127,7 +125,7 @@ exports.isLoggedIn =  async (req, res, next) => {
                     if(!results){
                         return next();
                     }else{
-                        req.user = result[0];
+                        req.user = results[0];
                         return next(); 
                     }
                 });
@@ -138,7 +136,7 @@ exports.isLoggedIn =  async (req, res, next) => {
 
         }
     } else{
-        next();
+        return next();
     }
 
     

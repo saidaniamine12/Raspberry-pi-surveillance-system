@@ -22,18 +22,27 @@ router.post('/login', authCtrl.authenticateUser);
 //profile route
 router.get('/profile',authCtrl.isLoggedIn, (req,res) => {
   if(req.user){
-    res.render('profile')
+    res.redirect('videos')
   } else {
     res.redirect('/login');
   }
 })
 
-router.get('/videos', (req,res) => {
-  res.send('videos');
+router.get('/videos',authCtrl.isLoggedIn, (req,res) => {
+  if(req.user){
+    res.redirect('videos')
+  } else {
+    res.redirect('/login');
+  }
 })
 
-router.get('/stream-room', (req,res) => {
+router.get('/stream',authCtrl.isLoggedIn, (req,res) => {
   res.send('streaming works');
+  if(req.user){
+    res.redirect('videos')
+  } else {
+    res.redirect('/stream');
+  }
 })
 
 module.exports = router;
