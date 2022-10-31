@@ -21,7 +21,11 @@ router.post('/login', authCtrl.authenticateUser);
 
 //profile route
 router.get('/profile',authCtrl.isLoggedIn, (req,res) => {
-  res.send('profile page works');
+  if(req.user){
+    res.render('profile')
+  } else {
+    res.redirect('/login');
+  }
 })
 
 router.get('/videos', (req,res) => {

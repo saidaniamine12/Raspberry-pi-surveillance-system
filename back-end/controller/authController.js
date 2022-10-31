@@ -31,27 +31,32 @@ exports.registerUser = async (req, res, next) => {
         }catch (error) {
             console.log(error.message,"probem in SELECT * FROM Users WHERE email =;");
 
-            return;
-        };
+        }
+
         if(results.length>0){
-            return res.json('email already in use');
-        };
+                return res.status(401).json('email already in use');
+            };
+        
 
         mysqldb.execute('INSERT INTO Users(`firstName`,`lastName`,`address`,`email`,`password`) VALUES (?,?,?,?,?);',
         [user.firstName,user.lastName,user.address,user.email,user.password], async (error,results,fields) => {
             try {
                 if (error){
 
-                    throw new Error;}
+                    throw new Error;
+                }else{
+                    return res.status(200).json("all done you may login");
+                    
+                }
             }catch(error) {
                 console.log(error.message);
-                res.send("problem in INSERT INTO Users");
-                return;
+                next();
+                
             };
-            res.status(200).json('user registred you may login');
         });
     });
-    next();
+    
+    
 };
 
 
@@ -101,7 +106,7 @@ exports.authenticateUser =  async (req, res, next) => {
             res.status(200).redirect("/");
             
         };
-        next();
+        
 
     });
 };
@@ -115,19 +120,28 @@ exports.isLoggedIn =  async (req, res, next) => {
             const decoded = await promisify(jwt.verify)(req.cookies.jwt,process.env.JWT_SECRET);
 
                 console.log(decoded);
+                //codecoed has the ID of the user the is logged in and the ecpiration date of the token 
+
+                //check if the user exists in the databa
+                mysqldb.execute('SELECT * FROM Users WHERE id =?;',[decoded.id], async (error,results,fields) => {
+                    if(!results){
+                        return next();
+                    }else{
+                        req.user = result[0];
+                        return next(); 
+                    }
+                });
         } catch (error){
             console.log(error);
-            return res.status(400).json('token is not valid');
+            return next();
+
 
         }
-    };
+    } else{
+        next();
+    }
 
-    //check if the user still exists
-    mysqldb.execute('SELECT * FROM Users WHERE id =?;',[decoded.id], async (error,results,fields) => {
-        console.log(results);
-    });
-
-    next();
+    
     
 
 
