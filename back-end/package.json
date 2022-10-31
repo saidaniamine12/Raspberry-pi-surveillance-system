@@ -1,0 +1,27 @@
+{
+  "name": "rt_surveillance",
+  "version": "1.0.0",
+  "description": "app to monitor personal property with the help of raspberry cam , this project is my second year ,first semstre project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "mohamed amine saidani",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "install": "^0.13.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.2",
+    "mysql-query-placeholders": "^0.2.2",
+    "mysql2": "^2.3.3",
+    "twilio": "^3.82.1",
+    "util": "^0.12.4"
+  }
+}
