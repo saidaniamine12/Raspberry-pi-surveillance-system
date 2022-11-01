@@ -119,7 +119,7 @@ exports.isLoggedIn =  async (req, res, next) => {
 
                 console.log(decoded);
                 //codecoed has the ID of the user the is logged in and the ecpiration date of the token 
-
+                //what is up
                 //check if the user exists in the databa
                 mysqldb.execute('SELECT * FROM Users WHERE id =?;',[decoded.id], async (error,results,fields) => {
                     if(!results){
