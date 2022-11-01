@@ -19,29 +19,32 @@ router.post('/signup',authCtrl.registerUser);
 //login route
 router.post('/login', authCtrl.authenticateUser);
 
+//logout
+router.get('/logout',authCtrl.logOut);
+
 //profile route
 router.get('/profile',authCtrl.isLoggedIn, (req,res) => {
   if(req.user){
-    res.redirect('videos')
+    res.json('profile works');
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 })
 
 router.get('/videos',authCtrl.isLoggedIn, (req,res) => {
   if(req.user){
-    res.redirect('videos')
+    res.json('videos work')
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 })
 
 router.get('/stream',authCtrl.isLoggedIn, (req,res) => {
   res.send('streaming works');
   if(req.user){
-    res.redirect('videos')
+    res.json('streaming room')
   } else {
-    res.redirect('/stream');
+    res.redirect('/');
   }
 })
 

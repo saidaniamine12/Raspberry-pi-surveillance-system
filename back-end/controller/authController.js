@@ -127,7 +127,6 @@ exports.isLoggedIn =  async (req, res, next) => {
                     }else{
                         req.user = results[0];
                         return next(); 
-                        //pgdvvgd
                     }
                 });
         } catch (error){
@@ -140,13 +139,15 @@ exports.isLoggedIn =  async (req, res, next) => {
         return next();
     }
 
-    
-    
-
-
-
-
 };
 
+exports.logOut = async (req,res) => {
+    res.cookie('jwt','logOutCookie', {
+        expires: new Date(Date.now() - 2*1000),
+        httpOnly: true
+    });
+
+    res.status(200).redirect('/');
+}
 
 
