@@ -127,6 +127,7 @@ exports.isLoggedIn =  async (req, res, next) => {
                     }else{
                         req.user = results[0];
                         return next(); 
+                        //pgdvvgd
                     }
                 });
         } catch (error){
